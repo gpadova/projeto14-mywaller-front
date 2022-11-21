@@ -21,7 +21,7 @@ export default function HomeScreen({
     data: "",
   });
   const [saldo, setSaldo] = useState(0);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const config = {
     headers: {
       authorization: `Bearer ${token}`,
@@ -45,12 +45,12 @@ export default function HomeScreen({
     setSaldo(soma);
   }
 
-  function voltarLogin(e){
-    e.preventDefault()
-    setIdDono("")
-    setNome("")
-    setIdDono("")
-    navigate("/")
+  function voltarLogin(e) {
+    e.preventDefault();
+    setIdDono("");
+    setNome("");
+    setIdDono("");
+    navigate("/");
   }
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export default function HomeScreen({
     <TelaToda>
       <Topo>
         <h1>Olá, {nome}</h1>
-        <MdExitToApp onClick={voltarLogin}/>
+        <MdExitToApp onClick={voltarLogin} />
       </Topo>
       {transacoes.length ? (
         <CaixonaRegistros2>
@@ -93,13 +93,19 @@ export default function HomeScreen({
         </CaixonaRegistros1>
       )}
       <CaixaEntSai>
-        <Link to={"/new-entry"} style={{ textDecoration: "none" }}>
+        <Link
+          to={"/new-entry"}
+          style={{ textDecoration: "none", color: "#FFF" }}
+        >
           <CaixaEntrada>
             <AiOutlinePlusCircle />
             <p>Nova Entrada</p>
           </CaixaEntrada>
         </Link>
-        <Link to={"/new-exit"} style={{ textDecoration: "none" }}>
+        <Link
+          to={"/new-exit"}
+          style={{ textDecoration: "none", color: "#FFF" }}
+        >
           <CaixaSaida>
             <AiOutlineMinusCircle />
             <p>Nova Saída</p>
@@ -217,7 +223,7 @@ const CaixaEntSai = styled.div`
 
 const CaixaEntrada = styled.div`
   height: 114px;
-  width: 156px;
+  width: 141px;
   left: 195px;
   top: 537px;
   border-radius: 5px;
@@ -226,11 +232,12 @@ const CaixaEntrada = styled.div`
   display: flex;
   justify-content: space-around;
   flex-direction: column;
+  padding-left: 15px;
 `;
 
 const CaixaSaida = styled.div`
   height: 114px;
-  width: 156px;
+  width: 141px;
   left: 195px;
   top: 537px;
   border-radius: 5px;
@@ -239,4 +246,8 @@ const CaixaSaida = styled.div`
   display: flex;
   justify-content: space-around;
   flex-direction: column;
+  padding-left: 15px;
+  .link {
+    color: #fff;
+  }
 `;

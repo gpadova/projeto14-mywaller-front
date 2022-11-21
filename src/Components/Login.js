@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Login({setToken, setNome, setIdDono, idDono}) {
+export default function Login({ setToken, setNome, setIdDono, idDono }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -14,8 +14,7 @@ export default function Login({setToken, setNome, setIdDono, idDono}) {
     e.preventDefault();
 
     const body = { email, password };
-    const URL =
-      "http://localhost:5000/sign-in";
+    const URL = "http://localhost:5000/sign-in";
 
     axios
       .post(URL, body)
@@ -23,8 +22,8 @@ export default function Login({setToken, setNome, setIdDono, idDono}) {
         navigate("/home");
         console.log(res);
         setToken(res.data.token);
-        setNome(res.data.nome)
-        setIdDono(res.data.userId)
+        setNome(res.data.nome);
+        setIdDono(res.data.userId);
       })
       .catch((res) => alert(res.response.data.message));
   }
@@ -55,7 +54,7 @@ export default function Login({setToken, setNome, setIdDono, idDono}) {
         </BotaoConfirmar>
       </form>
       <BotaoCadastro>
-        <Link to={"/sign-up"}>
+        <Link to={"/sign-up"} style={{ textDecoration: "none", color: "#FFF" }}>
           <p>Não tem uma conta? Cadastre-se!</p>
         </Link>
       </BotaoCadastro>
@@ -65,7 +64,7 @@ export default function Login({setToken, setNome, setIdDono, idDono}) {
 
 const TelaInicial = styled.div`
   width: 100%;
-  background-color: #915FBF;
+  background-color: #915fbf;
   height: 100vh;
   img {
     margin-top: 68px;
@@ -97,7 +96,7 @@ const FotoLogo = styled.div`
     font-family: Saira Stencil One;
     font-size: 32px;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 `;
 
@@ -111,8 +110,8 @@ const BotaoConfirmar = styled.div`
     left: 36px;
     top: 381px;
     border-radius: 4.636363506317139px;
-    background: #A328D6;
-    color: white
+    background: #a328d6;
+    color: white;
   }
 `;
 
@@ -121,4 +120,5 @@ const BotaoCadastro = styled.div`
   justify-content: center;
   color: white;
   text-decoration: underline;
+  margin-top: 10px;
 `;

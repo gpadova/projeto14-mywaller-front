@@ -79,7 +79,7 @@ export default function SignUp(){
         </form>
   
         <BotaoCadastro>
-          <Link to={"/"} style={{ textDecoration: "none" }}>
+          <Link to={"/"} style={{ textDecoration: "none", color: "#FFF" }}>
             <p>Já tem uma conta? Faça login!</p>
           </Link>
         </BotaoCadastro>
@@ -144,6 +144,7 @@ export default function SignUp(){
     justify-content: center;
     color: #52b6ff;
     text-decoration: underline;
+    margin-top: 10px;
   `;
 
   
