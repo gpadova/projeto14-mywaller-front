@@ -91,6 +91,8 @@ const Formulario = styled.div`
 const FotoLogo = styled.div`
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
+  padding-top: 20px;
   h1 {
     font-family: Saira Stencil One;
     font-size: 32px;

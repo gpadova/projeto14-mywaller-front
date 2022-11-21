@@ -1,23 +1,57 @@
 import axios from "axios";
 import styled from "styled-components";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
+import { MdExitToApp } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function HomeScreen({ token, nome, idDono }) {
+export default function HomeScreen({
+  token,
+  nome,
+  idDono,
+  setToken,
+  setNome,
+  setIdDono,
+}) {
   const [transacoes, setTransacoes] = useState({
     valor: "",
     descricao: "",
     tipo: "",
     data: "",
   });
-
+  const [saldo, setSaldo] = useState(0);
+  const navigate = useNavigate()
   const config = {
     headers: {
       authorization: `Bearer ${token}`,
       id: idDono,
     },
   };
+  function somarSaldo(trans) {
+    let soma = 0;
+    let saldo = [];
+    trans.map((reg) => {
+      if (reg.tipo == "entrada") {
+        saldo.push(Number(reg.valor));
+      } else {
+        saldo.push(-1 * Number(reg.valor));
+      }
+    });
+
+    for (let i = 0; i < saldo.length; i++) {
+      soma += saldo[i];
+    }
+    setSaldo(soma);
+  }
+
+  function voltarLogin(e){
+    e.preventDefault()
+    setIdDono("")
+    setNome("")
+    setIdDono("")
+    navigate("/")
+  }
 
   useEffect(() => {
     const URL = "http://localhost:5000/transaction";
@@ -25,24 +59,33 @@ export default function HomeScreen({ token, nome, idDono }) {
       .get(URL, config)
       .then((res) => {
         setTransacoes(res.data);
-        console.log(res.data);
+        somarSaldo(res.data);
       })
       .catch((res) => console.log(res));
   }, []);
 
-  console.log(transacoes);
   return (
     <TelaToda>
-      <h1>Olá, {nome}</h1>
+      <Topo>
+        <h1>Olá, {nome}</h1>
+        <MdExitToApp onClick={voltarLogin}/>
+      </Topo>
       {transacoes.length ? (
         <CaixonaRegistros2>
           {transacoes.map((trans) => (
             <div className="dados">
               <div className="data">{trans.data}</div>
               <div className="descricao">{trans.descricao}</div>
-              <div className={trans.tipo === "saida" ? "vermelho" : "verde"}> R$ {trans.valor}</div>
+              <div className={trans.tipo === "saida" ? "vermelho" : "verde"}>
+                {" "}
+                R$ {trans.valor}
+              </div>
             </div>
           ))}
+          <Saldo>
+            <div className="saldo">SALDO</div>
+            <div className={saldo <= 0 ? "vermelho" : "verde"}>R$ {saldo}</div>
+          </Saldo>
         </CaixonaRegistros2>
       ) : (
         <CaixonaRegistros1>
@@ -66,6 +109,18 @@ export default function HomeScreen({ token, nome, idDono }) {
     </TelaToda>
   );
 }
+const Saldo = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 326px;
+  height: 30px;
+  .vermelho {
+    color: #c70000;
+  }
+  .verde {
+    color: green;
+  }
+`;
 
 const TelaToda = styled.div`
   height: 100vh;
@@ -73,6 +128,17 @@ const TelaToda = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+`;
+
+const Topo = styled.div`
+  width: 326px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  font-size: 30px;
+  padding-top: 25px;
+  margin-bottom: 40px;
   h1 {
     font-family: Raleway;
     font-size: 26px;
@@ -81,9 +147,6 @@ const TelaToda = styled.div`
     letter-spacing: 0em;
     text-align: left;
     color: white;
-    margin-left: -70px;
-    padding-top: 25px;
-    margin-bottom: 40px;
   }
 `;
 

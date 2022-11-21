@@ -34,10 +34,25 @@ function App() {
             <Route path="/sign-up" element={<SignUp />} />
             <Route
               path="/home"
-              element={<HomeScreen token={token} nome={nome} idDono={idDono}/>}
+              element={
+                <HomeScreen
+                  token={token}
+                  nome={nome}
+                  idDono={idDono}
+                  setToken={setToken}
+                  setNome={setNome}
+                  setIdDono={setIdDono}
+                />
+              }
             />
-            <Route path="/new-entry" element={<NewEntry token={token} idDono={idDono}/>} />
-            <Route path="/new-exit" element={<NewExit token={token} idDono={idDono}/>} />
+            <Route
+              path="/new-entry"
+              element={<NewEntry token={token} idDono={idDono} />}
+            />
+            <Route
+              path="/new-exit"
+              element={<NewExit token={token} idDono={idDono} />}
+            />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>
